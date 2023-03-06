@@ -18,7 +18,12 @@ class IsPetugas
     public function handle(Request $request, Closure $next)
     {
         if (Auth::guard('admin')->check()) {
+            if (Auth::guard('admin')->user()->level == 'petugas') {
+                return $next($requests);
+            } elseif (Auth::guard('admin')->user()->level == 'admin') {
+
+            }
         }
-        return $next($request);
+        return redirect()->route('admin.formLogin');
     }
 }
